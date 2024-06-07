@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -50,7 +51,7 @@ class RoleController extends Controller
     public function show(string $id)
     {
     }
-    
+
     /**
      * Show the form for editing the specified resource.
      */
@@ -69,7 +70,7 @@ class RoleController extends Controller
             'name'
         ]);
         $role = Role::find($id)->update($data);
-        return redirect()->route('role.index')->with('status','Role update successfully');
+        return redirect()->route('role.index')->with('status', 'Role update successfully');
     }
 
     /**
@@ -81,9 +82,27 @@ class RoleController extends Controller
         $role->delete();
         return redirect()->route('role.index')->with('delete', 'Role deleted successfully');
     }
-    public function givePermissionToRole($id){
+
+    public function givePermissionToRole($id)
+    {
         $permissions = Permission::get();
         $role = Role::findOrFail($id);
-        return view('role-permission.role.givePermission',compact('role','permissions'));
+
+        $rolePermissions = DB::table('role_has_permissions')
+            ->where('role_has_permissions.role_id', $role->id)
+            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id');
+
+        return view('role-permission.role.givePermission', compact('role', 'permissions','rolePermissions'));
+    }
+    public function updatePermissionToRole(Request $request, $id)
+    {
+        $permissions = $request->only([
+            'permission'
+        ]);
+
+        $role = Role::findOrFail($id);
+        $role->syncPermissions($permissions);
+
+        return redirect()->back()->with('status', 'Permission added to role');
     }
 }

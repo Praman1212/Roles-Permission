@@ -1,7 +1,16 @@
 <x-app-web-layout>
+@php
+    // Convert the collection to an array
+    $rolePermissionsArray = $rolePermissions->toArray();
+@endphp
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
+                @if(session('status'))
+                <div class="alert alert-success">
+                    {{session('status')}}
+                </div>
+                @endif
                 <div class="card">
                     <div class="card-header">
                         <h4>
@@ -10,16 +19,27 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('role.updatePermission',$role->id) }}" method="POST">
+                        <form href="{{ route('role.givePermission',$role->id) }}" method="POST">
                             @csrf
                             @method('PUT')
+                            @error('permission')
+                            <span class="text-danger">
+                                {{$message}}
+                            </span>
+                            @enderror
                             <div class="mb-3">
                                 <label for="">Permission</label>
                                 <div class="row">
                                     @foreach($permissions as $permission)
                                     <div class="col-md-2">
                                         <label>
-                                            <input type="checkbox" name="permission[]" value="{{ $permission->id }}" />
+                                            <input 
+                                            type="checkbox" 
+                                            name="permission[]" 
+                                            value="{{ $permission->name }}" 
+
+                                            {{ in_array($permission->id, $rolePermissionsArray) ? 'checked' : '' }} 
+    />
                                             {{ $permission->name }}
                                         </label>
                                     </div>
