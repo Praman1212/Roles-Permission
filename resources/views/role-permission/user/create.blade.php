@@ -11,16 +11,32 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('user.store') }}" method="POST">
+                    <form action="{{ route('user.store') }}" method="POST">
                             @csrf
                             <div class="mb-3">
-                                <label for="">User Name</label>
+                                <label>Name</label>
                                 <input type="text" name="name" class="form-control">
                             </div>
                             <div class="mb-3">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <label>Email</label>
+                                <input type="email" name="email" class="form-control">
                             </div>
-
+                            <div class="mb-3">
+                                <label>Password</label>
+                                <input type="password" name="password" class="form-control">
+                            </div>
+                            <div class="mb-3">
+                                <label>Roles</label>
+                                <select name="roles[]" class="form-control" multiple>
+                                    <option value="">Select Role</option>
+                                    @foreach($roles as $role)
+                                    <option value="{{ $role }}">{{ $role }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <button class="btn btn-primary">Submit</button>
+                            </div>
                         </form>
                     </div>
                 </div>

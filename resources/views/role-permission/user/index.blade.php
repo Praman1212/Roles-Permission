@@ -3,11 +3,7 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
-                @if(session('status'))
-                <div class="alert alert-success">
-                    {{session('status')}}
-                </div>
-                @endif
+
                 @if(session('delete'))
                 <div class="alert alert-danger">
                     {{session('delete')}}
@@ -22,14 +18,46 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form action="{{ route('user.store') }}" method="POST">
-                            @csrf
-                            <div class="mb-3">
-                                <label>Role Name</label>
-                                <input type="text" name="name" class="form-control">
-                            </div>
-                            
-                        </form>
+                    <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Roles</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($users as $id => $user)
+                                <tr>
+                                    <td>
+                                        {{$id+1}}
+                                    </td>
+                                    <td>
+                                        {{$user->name}}
+                                    </td>
+                                    <td>
+                                        @foreach($user->getRoleNames() as $roleName)
+                                        <label for="" class="badge bg-primary mx-1">{{ $roleName }}</label>
+                                        @endforeach
+                                    </td>
+                                    <td>
+
+
+                                        <a href="{{ route('role.edit',$user->id) }}" class="btn btn-success">Edit</a>
+
+                                        <a class="btn btn-danger h-10">
+                                            <form action="{{ route('user.destroy',$user->id) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">Delete</button>
+                                            </form>
+                                        </a>
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>

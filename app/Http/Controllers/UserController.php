@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -13,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::get();
-        return view('role-permission.user.index',compact('users'));
+        return view('role-permission.user.index', compact('users'));
     }
 
     /**
@@ -21,7 +22,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('role-permission.user.create');
+        $roles = Role::pluck('name','name')->all();
+        return view('role-permission.user.create',compact('roles'));
     }
 
     /**
@@ -29,13 +31,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->only([
-            'name'
+        $data = $request->only([
+            'name',
+            'email',
+            'password',
         ]);
-
-        User::create($user);
-        return redirect()->route('role-permission.user.index')->with('status','User create successfully');
-
+        
+        $user = User::create($data);
+        $user->syncRoles($request->roles);
+        return redirect()->route('user.index')->with('status', 'User create successfully');
     }
 
     /**
@@ -67,6 +71,8 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->back()->with('delete','User delete successfully');
     }
 }
