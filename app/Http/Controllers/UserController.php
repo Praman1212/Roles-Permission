@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -47,7 +48,7 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        
     }
 
     /**
@@ -55,15 +56,29 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $roles = Role::pluck('name','name')->all();
+        $user = User::findOrFail($id);
+        $userRole = $user->roles->pluck('name','name')->all();
+        return view('role-permission.user.edit',compact('user','roles','userRole'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+        ]);
+        $data = $request->only([
+            'name',
+            'email',
+        ]);
+        $data['password'] = Hash::make($request->input('password'));
+        $user->update($data);
+        $user->syncRoles($request->roles);
+        return redirect()->route('user.index')->with('status','User updated successfully');
     }
 
     /**

@@ -10,6 +10,12 @@
                 </div>
                 @endif
 
+                @if(session('status'))
+                <div class="alert alert-success">
+                    {{session('status')}}
+                </div>
+                @endif
+
                 <div class="card mt-3">
                     <div class="card-header">
                         <h4>
@@ -18,7 +24,7 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                    <table class="table table-bordered table-striped">
+                        <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -42,9 +48,7 @@
                                         @endforeach
                                     </td>
                                     <td>
-
-
-                                        <a href="{{ route('role.edit',$user->id) }}" class="btn btn-success">Edit</a>
+                                        <a href="{{ route('user.edit',$user->id) }}" class="btn btn-success">Edit</a>
 
                                         <a class="btn btn-danger h-10">
                                             <form action="{{ route('user.destroy',$user->id) }}" method="post">

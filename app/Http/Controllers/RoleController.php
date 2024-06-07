@@ -70,6 +70,7 @@ class RoleController extends Controller
             'name'
         ]);
         $role = Role::find($id)->update($data);
+        
         return redirect()->route('role.index')->with('status', 'Role update successfully');
     }
 
