@@ -8,18 +8,41 @@ use Illuminate\Support\Facades\Route;
 
 
 
+Route::group(['middleware' => ['role:super-admin|admin|editor']], function () {
 
-Route::resource('permission',PermissionController::class);
+    
+    Route::resource('role', RoleController::class);
+    
+    Route::delete('role/{role}',[RoleController::class,'destroy'])->name('role.destroy')->middleware('permission:delete-role');
+    
+    Route::get('role/create',[RoleController::class,'create'])->name('role.create')->middleware('permission:create-role');
+    
+    Route::get('edit/{role}/edit',[RoleController::class,'edit'])->name('role.edit')->middleware('permission:edit-role');
+    Route::patch('role/{role}',[RoleController::class,'update'])->name('role.update')->middleware('permission:update-role');
+
+    
+    Route::resource('permission', PermissionController::class);
+    Route::delete('permission/{permission}',[permissionController::class,'destroy'])->name('permission.destroy')->middleware('permission:delete-role');
+    
+    Route::get('role/create',[RoleController::class,'create'])->name('role.create')->middleware('permission:create-role');
+    
+    Route::get('edit/{role}/edit',[RoleController::class,'edit'])->name('role.edit')->middleware('permission:edit-role');
+    Route::patch('role/{role}',[RoleController::class,'update'])->name('role.update')->middleware('permission:update-role');
 
 
-Route::resource('role',RoleController::class);
 
-Route::get('role/{id}/givePermission', [RoleController::class, 'givePermissionToRole'])->name('role.givePermission');
+    Route::get('role/{id}/givePermission', [RoleController::class, 'givePermissionToRole'])->name('role.givePermission');
 
-Route::put('role/{id}/givePermission', [RoleController::class, 'updatePermissionToRole'])->name('role.givePermission');
+    Route::put('role/{id}/givePermission', [RoleController::class, 'updatePermissionToRole'])->name('role.givePermission');
+
+    Route::resource('user', UserController::class);
+});
 
 
-Route::resource('user',UserController::class);
+
+
+
+
 
 
 
@@ -37,4 +60,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
