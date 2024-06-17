@@ -40,9 +40,11 @@
                                         {{$role->name}}
                                     </td>
                                     <td>
+                                        
                                         <a href="{{ route('role.givePermission',$role->id) }}" class="btn btn-primary">Give Permission</a>
-
+                                        
                                         <a href="{{ route('role.edit',$role->id) }}" class="btn btn-success">Edit</a>
+
 
                                         <a class="btn btn-danger h-10">
                                             <form action="{{ route('role.destroy',$role->id) }}" method="post">

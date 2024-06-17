@@ -21,7 +21,8 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        return view('role-permission.permission.create');
+        $models = ['user','product','role'];
+        return view('role-permission.permission.create',compact('models'));
     }
 
     /**

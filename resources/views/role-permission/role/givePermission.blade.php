@@ -1,5 +1,5 @@
 <x-app-web-layout>
-
+    @include('role-permission.nav-links')
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -16,41 +16,52 @@
                         </h4>
                     </div>
                     <div class="card-body">
-                        <form href="{{ route('role.givePermission',$role->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            @error('permission')
-                            <span class="text-danger">
-                                {{$message}}
-                            </span>
-                            @enderror
-                            <div class="mb-3">
-                                <label for="">Permission</label>
-                                <div class="row">
-                                    @foreach($permissions as $permission)
-                                    <div class="col-md-2">
-                                        <label>
-                                            <input 
-                                            type="checkbox" 
-                                            name="permission[]" 
-                                            value="{{ $permission->name }}" 
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Model</th>
+                                    <th>Permission</th>
 
-                                            {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} 
-    />
-                                            {{ $permission->name }}
-                                        </label>
-                                    </div>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <form action="{{ route('role.givePermission',$role->id) }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+                                    @error('permission')
+                                    <span class="text-danger">
+                                        {{$message}}
+                                    </span>
+                                    @enderror
+                                    @foreach ($models as $id => $model)
+                                    <tr>
+
+                                        <td>
+                                            {{ $id +1 }}
+                                        </td>
+
+                                        <td>
+                                            <input type="text" name="model" value="{{ $model }}" class="form-control input-no-border" readonly>
+                                        </td>
+
+                                        <td>
+                                            @foreach($permissions as $permission)
+                                            <label>
+                                                <input type="checkbox" name="permission[]" value="{{ $permission->name }} " {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
+                                                {{$permission->name }}
+                                            </label>
+                                            @endforeach
+                                        </td>
+
+                                    </tr>
                                     @endforeach
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <button type="submit" class="btn btn-warning">Update</button>
-                            </div>
-
-                        </form>
+                                    <button type="submit" class="btn btn-warning">Update</button>
+                                </form>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </x-app-web-layout>

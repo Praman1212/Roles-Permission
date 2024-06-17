@@ -26,7 +26,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Name</th>
+                                    <th>Permission</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -49,6 +49,7 @@
                                                 <button type="submit">Delete</button>
                                             </form>
                                         </a>
+
                                     </td>
                                 </tr>
                                 @endforeach

@@ -31,13 +31,7 @@ class RoleController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => [
-                'required',
-                'string',
-                'unique:roles,name'
-            ]
-        ]);
+
         $role = $request->only([
             'name'
         ]);
@@ -89,16 +83,19 @@ class RoleController extends Controller
         $permissions = Permission::get();
         $role = Role::findOrFail($id);
 
+        $models = ['user','role','product'];
+
         $rolePermissions = DB::table('role_has_permissions')
             ->where('role_has_permissions.role_id', $role->id)
             ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')->toArray();
 
-        return view('role-permission.role.givePermission', compact('role', 'permissions','rolePermissions'));
+        return view('role-permission.role.givePermission', compact('role', 'permissions','models','rolePermissions'));
     }
     public function updatePermissionToRole(Request $request, $id)
     {
+
         $permissions = $request->only([
-            'permission'
+            'permission',
         ]);
 
         $role = Role::findOrFail($id);
@@ -106,4 +103,6 @@ class RoleController extends Controller
 
         return redirect()->back()->with('status', 'Permission added to role');
     }
+
+
 }

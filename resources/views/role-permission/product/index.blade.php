@@ -40,8 +40,15 @@
                                         {{$product->name}}
                                     </td>
                                     <td>
+                                        @can('edit-product')
                                         <a href="{{ route('product.edit',$product->id) }}" class="btn btn-success">Edit</a>
+                                        @endcan
+
+                                        @can('view-product')
                                         <a href="{{ route('product.show',$product->id) }}" class="btn btn-info">Show</a>
+                                        @endcan
+                                        
+                                        @can('delete-product')
                                         <a class="btn btn-danger h-10">
                                             <form action="{{ route('product.destroy',$product->id) }}" method="post">
                                                 @csrf
@@ -49,6 +56,7 @@
                                                 <button type="submit">Delete</button>
                                             </form>
                                         </a>
+                                        @endcan
                                     </td>
                                 </tr>
                                 @endforeach

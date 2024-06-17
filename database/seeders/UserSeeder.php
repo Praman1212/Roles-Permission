@@ -24,18 +24,59 @@ class UserSeeder extends Seeder
             'name' => 'super-admin',
             'guard_name' => 'web'
         ]);
-        DB::table('permissions')->insert([
-            'name'=>'create-role',
-            'guard_name' => 'web'
-        ]);
+
+
+        $models = ['user', 'role', 'product'];
+
+        $data = [];
+
+        foreach ($models as $id => $model) {
+            [
+                $data[] = [
+                    'id' => ($id * 5) + 1,
+                    'name' => 'create-' . $model,
+                    'guard_name' => 'web'
+                ],
+                $data[] = [
+                    'id' => ($id * 5) + 2,
+                    'name' => 'view-' . $model,
+                    'guard_name' => 'web'
+                ],
+                $data[] = [
+                    'id' => ($id * 5) + 3,
+                    'name' => 'edit-' . $model,
+                    'guard_name' => 'web'
+                ],
+                $data[] = [
+                    'id' => ($id * 5) + 4,
+                    'name' => 'update-' . $model,
+                    'guard_name' => 'web'
+                ],
+                $data[] = [
+                    'id' => ($id * 5) + 5,
+                    'name' => 'delete-' . $model,
+                    'guard_name' => 'web'
+                ]
+
+            ];
+        }
+
+        DB::table('permissions')->insert($data);
+
+
         DB::table('role_has_permissions')->insert([
-            'permission_id'=> 1,
-            'role_id'=>1
+
+            [
+                'permission_id' => 1,
+                'role_id' => 1
+            ]
+
         ]);
+
         DB::table('model_has_roles')->insert([
-            'role_id'=> 1,
+            'role_id' => 1,
             'model_type' => 'App\Models\User',
-            'model_id'=>1
+            'model_id' => 1
         ]);
     }
 }
