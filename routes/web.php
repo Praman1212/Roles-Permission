@@ -8,14 +8,16 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::group(['middleware' => ['role:super-admin|admin|editor']], function () {
+Route::group(['middleware' => ['role:super-admin|admin']], function () {
 
     //role route
     Route::resource('role', RoleController::class);
 
+    Route::get('role',[RoleController::class,'index'])->name('role.index');
+
     Route::delete('role/{role}', [RoleController::class, 'destroy'])->name('role.destroy')->middleware('permission:delete-role');
 
-    Route::get('role/create', [RoleController::class, 'create'])->name('role.create')->middleware('permission:create-role');
+    // Route::get('role/create', [RoleController::class, 'create'])->name('role.create')->middleware('permission:create-role');
 
     Route::get('edit/{role}/edit', [RoleController::class, 'edit'])->name('role.edit')->middleware('permission:edit-role');
 
@@ -25,7 +27,7 @@ Route::group(['middleware' => ['role:super-admin|admin|editor']], function () {
     //Permission route
     Route::resource('permission', PermissionController::class);
 
-    Route::get('permission/create', [PermissionController::class, 'create'])->name('permission.create')->middleware('permission.create');
+    Route::get('permission/create', [PermissionController::class, 'create'])->name('permission.create');
 
     Route::delete('permission/{permission}', [PermissionController::class, 'destroy'])->name('permission.destroy')->middleware('permission:delete-role');
 
@@ -34,6 +36,7 @@ Route::group(['middleware' => ['role:super-admin|admin|editor']], function () {
     Route::patch('role/{role}', [RoleController::class, 'update'])->name('role.update')->middleware('permission:update-role');
 
 
+    //giving the permission
 
     Route::get('role/{id}/givePermission', [RoleController::class, 'givePermissionToRole'])->name('role.givePermission');
 
@@ -42,13 +45,6 @@ Route::group(['middleware' => ['role:super-admin|admin|editor']], function () {
     //User route
     Route::resource('user', UserController::class);
 
-    Route::get('user/create',[UserController::class,'create'])->name('user.create')->middleware('permission:create-role');
-
-    Route::get('user/{user}/edit',[UserController::class,'edit'])->name('user.edit')->middleware('permission:edit-role');
-
-    Route::delete('user/{user}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('permission:delete-role');
-
-    Route::patch('user/{role}',[UserController::class,'update'])->name('user.update')->middleware('permission:update-role');
 });
 
 

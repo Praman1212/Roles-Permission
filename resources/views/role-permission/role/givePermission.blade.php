@@ -1,8 +1,5 @@
 <x-app-web-layout>
-@php
-    // Convert the collection to an array
-    $rolePermissionsArray = $rolePermissions->toArray();
-@endphp
+
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
@@ -38,7 +35,7 @@
                                             name="permission[]" 
                                             value="{{ $permission->name }}" 
 
-                                            {{ in_array($permission->id, $rolePermissionsArray) ? 'checked' : '' }} 
+                                            {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} 
     />
                                             {{ $permission->name }}
                                         </label>

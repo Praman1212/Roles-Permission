@@ -91,7 +91,7 @@ class RoleController extends Controller
 
         $rolePermissions = DB::table('role_has_permissions')
             ->where('role_has_permissions.role_id', $role->id)
-            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id');
+            ->pluck('role_has_permissions.permission_id','role_has_permissions.permission_id')->toArray();
 
         return view('role-permission.role.givePermission', compact('role', 'permissions','rolePermissions'));
     }

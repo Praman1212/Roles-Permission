@@ -24,5 +24,18 @@ class UserSeeder extends Seeder
             'name' => 'super-admin',
             'guard_name' => 'web'
         ]);
+        DB::table('permissions')->insert([
+            'name'=>'create-role',
+            'guard_name' => 'web'
+        ]);
+        DB::table('role_has_permissions')->insert([
+            'permission_id'=> 1,
+            'role_id'=>1
+        ]);
+        DB::table('model_has_roles')->insert([
+            'role_id'=> 1,
+            'model_type' => 'App\Models\User',
+            'model_id'=>1
+        ]);
     }
 }
