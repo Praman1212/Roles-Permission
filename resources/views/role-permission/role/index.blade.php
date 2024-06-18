@@ -18,9 +18,10 @@
                     <div class="card-header">
                         <h4>
                             Role
-                            @can('create-role')
+                            @role('super-admin')
                             <a href="{{ route('role.create') }}" class="btn btn-primary float-end">Add Role</a>
-                            @endcan
+                            @endrole
+
                         </h4>
                     </div>
                     <div class="card-body">
@@ -43,9 +44,9 @@
                                     </td>
                                     <td>
 
-                                    @role('super-admin')
+                                        @role('super-admin')
                                         <a href="{{ route('role.givePermission',$role->id) }}" class="btn btn-primary">Give Permission</a>
-                                    @endrole
+                                        @endrole
                                         @can('edit-role')
 
                                         <a href="{{ route('role.edit',$role->id) }}" class="btn btn-success">Edit</a>

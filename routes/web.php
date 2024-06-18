@@ -40,7 +40,7 @@ Route::group(['middleware' => ['role:super-admin|admin']], function () {
 
     Route::delete('role/{role}', [RoleController::class, 'destroy'])->name('role.destroy')->middleware('permission:delete-role');
 
-    Route::get('role/create', [RoleController::class, 'create'])->name('role.create')->middleware('permission:create-role');
+    Route::get('role/create', [RoleController::class, 'create'])->name('role.create');
 
     Route::get('role/{role}/edit', [RoleController::class, 'edit'])->name('role.edit')->middleware('permission:edit-role');
 
