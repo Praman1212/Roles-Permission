@@ -16,10 +16,12 @@
 
                 <div class="card mt-3">
                     <div class="card-header">
+                        @role('super-admin')
                         <h4>
                             Permission
                             <a href="{{ route('permission.create') }}" class="btn btn-primary float-end">Add Permission</a>
                         </h4>
+                        @endrole
                     </div>
                     <div class="card-body">
                         <table class="table table-bordered table-striped">
@@ -40,8 +42,10 @@
                                         {{$permission->name}}
                                     </td>
                                     <td>
+                                        
                                         <a href="{{ route('permission.edit',$permission->id) }}" class="btn btn-success">Edit</a>
 
+                                        @role('super-admin')
                                         <a class="btn btn-danger h-10">
                                             <form action="{{ route('permission.destroy',$permission->id) }}" method="post">
                                                 @csrf
@@ -49,6 +53,7 @@
                                                 <button type="submit">Delete</button>
                                             </form>
                                         </a>
+                                        @endrole
 
                                     </td>
                                 </tr>

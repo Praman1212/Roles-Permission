@@ -35,27 +35,32 @@ class UserSeeder extends Seeder
                 $data[] = [
                     'id' => ($id * 5) + 1,
                     'name' => 'create-' . $model,
-                    'guard_name' => 'web'
+                    'guard_name' => 'web',
+                    'type' => $model
                 ],
                 $data[] = [
                     'id' => ($id * 5) + 2,
                     'name' => 'view-' . $model,
-                    'guard_name' => 'web'
+                    'guard_name' => 'web',
+                    'type' => $model
                 ],
                 $data[] = [
                     'id' => ($id * 5) + 3,
                     'name' => 'edit-' . $model,
-                    'guard_name' => 'web'
+                    'guard_name' => 'web',
+                    'type' => $model
                 ],
                 $data[] = [
                     'id' => ($id * 5) + 4,
                     'name' => 'update-' . $model,
-                    'guard_name' => 'web'
+                    'guard_name' => 'web',
+                    'type' => $model
                 ],
                 $data[] = [
                     'id' => ($id * 5) + 5,
                     'name' => 'delete-' . $model,
-                    'guard_name' => 'web'
+                    'guard_name' => 'web',
+                    'type' => $model
                 ]
 
             ];

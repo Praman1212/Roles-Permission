@@ -19,7 +19,7 @@
                         <table class="table table-bordered table-striped">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+
                                     <th>Model</th>
                                     <th>Permission</th>
 
@@ -34,19 +34,38 @@
                                         {{$message}}
                                     </span>
                                     @enderror
-                                    @foreach ($models as $id => $model)
                                     <tr>
-
+                                        
+                                        
                                         <td>
-                                            {{ $id +1 }}
-                                        </td>
-
-                                        <td>
+                                            @foreach ($models as $id => $model)
                                             <input type="text" name="model" value="{{ $model }}" class="form-control input-no-border" readonly>
+                                            <br>
+                                            @endforeach
                                         </td>
 
                                         <td>
-                                            @foreach($permissions as $permission)
+                                            @foreach($permissions->where('type' , 'user') as $permission)
+                                            <label>
+                                                <input type="checkbox" name="permission[]" value="{{ $permission->name }} " {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
+                                                {{$permission->name }}
+                                            </label>
+                                            @endforeach
+                                            <br>
+                                            <br>
+                                            <br>
+
+                                            @foreach($permissions->where('type' , 'role') as $permission)
+                                            <label>
+                                                <input type="checkbox" name="permission[]" value="{{ $permission->name }} " {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
+                                                {{$permission->name }}
+                                            </label>
+                                            @endforeach
+                                            
+                                            <br>
+                                            <br>
+                                            <br>
+                                            @foreach($permissions->where('type' , 'product') as $permission)
                                             <label>
                                                 <input type="checkbox" name="permission[]" value="{{ $permission->name }} " {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
                                                 {{$permission->name }}
@@ -54,9 +73,9 @@
                                             @endforeach
                                         </td>
 
+
                                     </tr>
-                                    @endforeach
-                                    <button type="submit" class="btn btn-warning">Update</button>
+                                    <button type="submit" class="btn btn-warning mb-3">Update</button>
                                 </form>
                             </tbody>
                         </table>

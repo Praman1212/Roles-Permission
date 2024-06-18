@@ -40,12 +40,17 @@
                                         {{$role->name}}
                                     </td>
                                     <td>
-                                        
+
+                                    @role('super-admin')
                                         <a href="{{ route('role.givePermission',$role->id) }}" class="btn btn-primary">Give Permission</a>
-                                        
+                                    @endrole
+                                        @can('edit-role')
+
                                         <a href="{{ route('role.edit',$role->id) }}" class="btn btn-success">Edit</a>
 
+                                        @endcan
 
+                                        @can('delete-role')
                                         <a class="btn btn-danger h-10">
                                             <form action="{{ route('role.destroy',$role->id) }}" method="post">
                                                 @csrf
@@ -53,6 +58,8 @@
                                                 <button type="submit">Delete</button>
                                             </form>
                                         </a>
+                                        @endcan
+
                                     </td>
                                 </tr>
                                 @endforeach
