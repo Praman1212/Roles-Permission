@@ -40,6 +40,7 @@
                                         {{$id+1}}
                                     </td>
                                     <td>
+                                        
                                         {{$role->name}}
                                     </td>
                                     <td>
@@ -47,6 +48,7 @@
                                         @role('super-admin')
                                         <a href="{{ route('role.givePermission',$role->id) }}" class="btn btn-primary">Give Permission</a>
                                         @endrole
+                                        
                                         @can('edit-role')
 
                                         <a href="{{ route('role.edit',$role->id) }}" class="btn btn-success">Edit</a>

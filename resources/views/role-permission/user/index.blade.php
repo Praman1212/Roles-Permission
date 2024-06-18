@@ -20,7 +20,9 @@
                     <div class="card-header">
                         <h4>
                             User
+                            @can('create-user')
                             <a href="{{ route('user.create') }}" class="btn btn-primary float-end">Add User</a>
+                            @endcan
                         </h4>
                     </div>
                     <div class="card-body">
@@ -53,7 +55,9 @@
                                         {{$user->email}}
                                     </td>
                                     <td>
+                                        @can('edit-user')
                                         <a href="{{ route('user.edit',$user->id) }}" class="btn btn-success">Edit</a>
+                                        @endcan
                                         @can('delete-user')
                                         <a class="btn btn-danger h-10">
                                             <form action="{{ route('user.destroy',$user->id) }}" method="post">

@@ -15,7 +15,22 @@ Route::group(['middleware' => ['role:super-admin|admin']], function () {
     // Route::resource('role', RoleController::class);
 
     // //User route
-    Route::resource('user', UserController::class);
+
+
+    Route::get('user',[UserController::class,'index'])->name('user.index');
+
+
+    Route::post('user',[UserController::class,'store'])->name('user.store');
+
+    Route::delete('user/{user}', [UserController::class, 'destroy'])->name('user.destroy')->middleware('permission:delete-user');
+
+    Route::get('user/create', [UserController::class, 'create'])->name('user.create')->middleware('permission:create-user');
+
+    Route::get('user/{user}/edit', [UserController::class, 'edit'])->name('user.edit')->middleware('permission:edit-user');
+
+    Route::put('user/{user}', [UserController::class, 'update'])->name('user.update')->middleware('permission:update-user');
+
+    Route::get('user/{user}',[UserController::class,'show'])->name('user.show')->middleware('permission:view-user');
     
     // //Route for products
     // Route::resource('product',ProductController::class);
@@ -46,6 +61,9 @@ Route::group(['middleware' => ['role:super-admin|admin']], function () {
 
     Route::put('role/{role}', [RoleController::class, 'update'])->name('role.update')->middleware('permission:update-role');
 
+    Route::get('role/{role}',[RoleController::class,'show'])->name('role.show')->middleware('permission:view-role');
+
+
 
     //Permission route
     
@@ -61,6 +79,9 @@ Route::group(['middleware' => ['role:super-admin|admin']], function () {
     Route::put('permission/{permission}', [PermissionController::class, 'update'])->name('permission.update')->middleware('permission:update-role');
 
     Route::post('permission',[PermissionController::class,'store'])->name('permission.store');
+
+    Route::get('permission/{permission}',[PermissionController::class,'show'])->name('permission.show')->middleware('permission:view-permission');
+
 
     
     //Product route

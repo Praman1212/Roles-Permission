@@ -3,11 +3,13 @@
     <div class="container mt-5">
         <div class="row">
             <div class="col-md-12">
+
                 @if(session('status'))
                 <div class="alert alert-success">
                     {{session('status')}}
                 </div>
                 @endif
+
                 @if(session('delete'))
                 <div class="alert alert-danger">
                     {{session('delete')}}
@@ -17,7 +19,7 @@
                 <div class="card mt-3">
                     <div class="card-header">
                         <h4>
-                            Role
+                            Products
                             <a href="{{ route('product.create') }}" class="btn btn-primary float-end">Add Product</a>
                         </h4>
                     </div>
@@ -47,7 +49,7 @@
                                         @can('view-product')
                                         <a href="{{ route('product.show',$product->id) }}" class="btn btn-info">Show</a>
                                         @endcan
-                                        
+
                                         @can('delete-product')
                                         <a class="btn btn-danger h-10">
                                             <form action="{{ route('product.destroy',$product->id) }}" method="post">

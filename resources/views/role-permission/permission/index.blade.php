@@ -42,8 +42,9 @@
                                         {{$permission->name}}
                                     </td>
                                     <td>
-                                        
+                                        @role('super-admin')
                                         <a href="{{ route('permission.edit',$permission->id) }}" class="btn btn-success">Edit</a>
+                                        @endrole
 
                                         @role('super-admin')
                                         <a class="btn btn-danger h-10">
