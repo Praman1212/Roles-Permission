@@ -18,7 +18,9 @@
                     <div class="card-header">
                         <h4>
                             Role
+                            @can('create-role')
                             <a href="{{ route('role.create') }}" class="btn btn-primary float-end">Add Role</a>
+                            @endcan
                         </h4>
                     </div>
                     <div class="card-body">

@@ -35,44 +35,42 @@
                                     </span>
                                     @enderror
                                     <tr>
-                                        
-                                        
+
+
                                         <td>
                                             @foreach ($models as $id => $model)
-                                            <input type="text" name="model" value="{{ $model }}" class="form-control input-no-border" readonly>
-                                            <br>
+                                            <div class="m-3">
+
+                                                <input type="text" name="model" value="{{ $model }}" class="form-control input-no-border" readonly>
+
+                                            </div>
                                             @endforeach
                                         </td>
 
                                         <td>
                                             @foreach($permissions->where('type' , 'user') as $permission)
-                                            <label>
+                                            <label class="m-3">
                                                 <input type="checkbox" name="permission[]" value="{{ $permission->name }} " {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
                                                 {{$permission->name }}
                                             </label>
                                             @endforeach
-                                            <br>
-                                            <br>
                                             <br>
 
                                             @foreach($permissions->where('type' , 'role') as $permission)
-                                            <label>
+                                            <label class="m-3">
                                                 <input type="checkbox" name="permission[]" value="{{ $permission->name }} " {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
                                                 {{$permission->name }}
                                             </label>
                                             @endforeach
-                                            
-                                            <br>
-                                            <br>
+
                                             <br>
                                             @foreach($permissions->where('type' , 'product') as $permission)
-                                            <label>
+                                            <label class="m-3">
                                                 <input type="checkbox" name="permission[]" value="{{ $permission->name }} " {{ in_array($permission->id, $rolePermissions) ? 'checked' : '' }} />
                                                 {{$permission->name }}
                                             </label>
                                             @endforeach
                                         </td>
-
 
                                     </tr>
                                     <button type="submit" class="btn btn-warning mb-3">Update</button>
